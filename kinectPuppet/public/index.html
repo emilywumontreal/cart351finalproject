@@ -12,7 +12,18 @@
     //http://www.webondevices.com/xbox-kinect-2-javascript-gesture-tracking
     let canvas = document.getElementById("myCanvas");
     let context = canvas.getContext("2d");
-
+//bouncing balls
+    // var numBalls = 5;
+    // for (var i = 0; i < numBalls; i++) {
+    //   balls[i] = new Ball(
+    //     random(canvas.width),
+    //     random(20),
+    //     random(5, 20),
+    //     i,
+    //     balls
+    //   );
+    // }
+// end of bouncing balls
     let clientSocket = io.connect("http://localhost:8000");
 
     clientSocket.on('bodyFrame', interpretData);
@@ -22,10 +33,11 @@
 
       let user = bodyFrame;
        let rightHandPositonX = user.joints[11].depthX;
-        let rightHandPositonY = user.joints[11].depthY;
-
+      let rightHandPositonY = user.joints[11].depthY;
+        let leftHandPositonX = user.joints[7].depthX;
+         let leftHandPositonY = user.joints[7].depthY;
     //let torsoPosition = user.joints[1].depthX;
-//      console.log(torsoPosition);
+//      console.log(torsoPosition); Joints[JointType.Head]
 //     let rightHandRelativePosition = rightHandPositon - torsoPosition;
 //     let oldspeed = rightHandRelativePosition;
 //     let rightHandRelativeSpeed = rightHandRelativePosition - oldspeed;
@@ -41,21 +53,33 @@
 
       context.clearRect(0, 0, canvas.width, canvas.height);
       for (let j = 0; j < user.joints.length; j++) {
+        if (j != 6 && j != 10 &&  j != 21 && j != 22 && j != 23 && j != 24) {
         let joint = user.joints[j];
         context.fillStyle = "#000000";
         context.beginPath();
-        context.arc(joint.depthX * 400, joint.depthY * 400, 5, 0, Math.PI * 2, true);
+        if (j==7 || j==11)
+        {
+          context.arc(joint.depthX * 400, joint.depthY * 400, 10, 0, Math.PI * 4, true);
+        } else {
+          context.arc(joint.depthX * 400, joint.depthY * 400, 5, 0, Math.PI * 2, true);
+      }
         //multiplied with static integer 400 in order to adjust position on canvas
         // as without it skeleton projection formed is only visible in a corner as DepthX values were always less than 1
         context.closePath();
         context.fill(); //drawing a circle for each joint on the canvas
       }
-      // only right hand:::
-      context.fillStyle = "#0000EE";
+      }
+      //  right hand:::
+      context.fillStyle = "#FFFFFF";
       context.beginPath();
       context.arc(rightHandPositonX * 400, rightHandPositonY * 400, 5, 0, Math.PI * 2, true);
       //multiplied with static integer 400 in order to adjust position on canvas
       // as without it skeleton projection formed is only visible in a corner as DepthX values were always less than 1
+      context.closePath();
+      context.fill(); //drawing a circle for right hand on the canvas
+
+      context.beginPath();
+      context.arc(leftHandPositonX * 400, leftHandPositonY * 400, 5, 0, Math.PI * 2, true);
       context.closePath();
       context.fill(); //drawing a circle for right hand on the canvas
   }
@@ -63,12 +87,12 @@
 }
 </script>
 <script type='text/javascript' src='libs/p5.min.js'></script>
-<script type='text/javascript' src='libs/p5.sound.js'></script>
-<script type='text/javascript' src='libs/p5.dom.js'></script>
+<!--script type='text/javascript' src='libs/p5.sound.js'></script>
+<script type='text/javascript' src='libs/p5.dom.js'></script-->
 <script type='text/javascript' src="js/bouncyballs.js"></script>
 </head>
 <body>
-  <canvas id="myCanvas" width = 500 height=500></canvas>
+  <canvas id="myCanvas" width = 900 height=500></canvas>
   <!--div id="startup">
 
     <p>userId</p>
