@@ -20,8 +20,15 @@ express = require('express'),
                 io.sockets.emit('bodyFrame', bodyFrame.bodies[i]);
             }
           }
+
         });
     // Kinect is ready!
+
+
+    // serving static files
+    let static = require('node-static'); // for serving static files (i.e. css,js,html...)
+    // serve anything from this dir ...
+    app.use(express.static(__dirname + '/public'));
 
 //console.log('Point your browser to http://www.webondevices.com');
 app.get('/', function(req, res) {

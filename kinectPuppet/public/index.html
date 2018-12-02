@@ -1,8 +1,11 @@
 <html>
 <head>
+  <meta charset="utf-8" />
   <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+
+  <!--<link rel="stylesheet" type="text/css" href="style.css">-->
   <style>
-  canvas{  background:lightgrey; }
+    canvas{  background:lightgrey; }
   </style>
   <script>
   window.onload  = function(){
@@ -12,24 +15,14 @@
 
     let clientSocket = io.connect("http://localhost:8000");
 
-
     clientSocket.on('bodyFrame', interpretData);
 
     function interpretData(bodyFrame) {
-
     //        console.log(bodyFrame.bodies[i]);
 
-        let user = bodyFrame;
-         let rightHandPositonX = user.joints[11].depthX;
-          let rightHandPositonY = user.joints[11].depthY;
-
-
-
-
-   //  let user = bodyFrame.bodies[4];
-   // let rightHandPositonX = user.joints[11].depthX;
-   //  let rightHandPositonY = user.joints[11].depthY;
-
+      let user = bodyFrame;
+       let rightHandPositonX = user.joints[11].depthX;
+        let rightHandPositonY = user.joints[11].depthY;
 
     //let torsoPosition = user.joints[1].depthX;
 //      console.log(torsoPosition);
@@ -64,11 +57,15 @@
       //multiplied with static integer 400 in order to adjust position on canvas
       // as without it skeleton projection formed is only visible in a corner as DepthX values were always less than 1
       context.closePath();
-      context.fill(); //drawing a circle for each joint on the canvas
+      context.fill(); //drawing a circle for right hand on the canvas
   }
 
 }
 </script>
+<script type='text/javascript' src='libs/p5.min.js'></script>
+<script type='text/javascript' src='libs/p5.sound.js'></script>
+<script type='text/javascript' src='libs/p5.dom.js'></script>
+<script type='text/javascript' src="js/bouncyballs.js"></script>
 </head>
 <body>
   <canvas id="myCanvas" width = 500 height=500></canvas>
