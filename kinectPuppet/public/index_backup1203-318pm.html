@@ -14,39 +14,34 @@
   <script>
   let canvas;
   let context;
-
-  var numBalls = 1;
-  var spring = 0.7;
-  var gravity = 0.03;
-  var friction = -0.7;
+  var numBalls = 2;
+  var spring = 0.01;
+  var gravity = 0.05;
+  var friction = -0.9;
   var balls = [];
-
   let rightHandPositonX;
   let rightHandPositonY;
   let leftHandPositonX;
   let leftHandPositonY;
-
   let user = null;
-  let userId = "Emily";
-  let gameFlag = 0;
-  let credit = 0;
-  let creditFlag = 0;
+  let hands = [];
+
   window.onload  = function(){
-
- canvas = document.getElementById("myCanvas");
-  context = canvas.getContext("2d");
-
-
-    let clientSocket = io.connect("http://localhost:4200");
+    //http://www.webondevices.com/xbox-kinect-2-javascript-gesture-tracking
+     canvas = document.getElementById("myCanvas");
+    context = canvas.getContext("2d");
+     credit = 0;
+    let j = 0;
+    let clientSocket = io.connect("http://localhost:8000");
     //for (let i=0; i<=5;i++) {
 
     //clientSocket.on('bodyFrame0', interpretData);
-    clientSocket.on('bodyFrame', function(data){interpretData(data);});
+    clientSocket.on('bodyFrame', function(){interpretData(data);});
 
 
     function interpretData(data) {
     //  console.log(data.userId);
-  //  console.log(data.bodyFrame);
+  //    console.log(data.bodyFrame);
     //        console.log(bodyFrame.bodies[i]);
   // this interpretData function is for drawing body joints with two hands
       user = data.bodyFrame;
@@ -67,11 +62,9 @@
        function setUpBalls(){
          for (var i = 0; i < numBalls; i++) {
            balls[i] = new Ball(
-             //Math.random() * (canvas.width - canvas.width/10 + 1) + canvas.width/10;
-             (Math.random()*canvas.width*0.8)+canvas.width/5,
+             Math.random()*canvas.width/2,
              Math.random()*canvas.height/25,
-             (Math.random()*12)+7,
-             //15,
+             (Math.random()*15)+5,
              i,
              balls
            );
@@ -89,10 +82,7 @@
 //       leftHandPositonY = user.joints[7].depthY;
 //
 //   }
-function updataCredit(userId, credit)
-{
-  
-};
+
     requestAnimationFrame(run);
     function run(){
       //console.log("rightHandPositonX=====" + rightHandPositonX*400);
@@ -109,7 +99,7 @@ function updataCredit(userId, credit)
       context.beginPath();
       if (j==7 || j==11)
       {
-        context.arc(joint.depthX * 400, joint.depthY * 400, 15, 0, Math.PI * 4, true); //drawing a circle for left hand on the canvas
+        context.arc(joint.depthX * 400, joint.depthY * 400, 10, 0, Math.PI * 4, true); //drawing a circle for left hand on the canvas
       } else {
         context.arc(joint.depthX * 400, joint.depthY * 400, 5, 0, Math.PI * 2, true);//drawing a circle for right hand on the canvas
     }
@@ -118,37 +108,15 @@ function updataCredit(userId, credit)
       context.fill(); //drawing a circle for each joint on the canvas
     }
     }
-    if (gameFlag == 0) {
-    balls.forEach(ball => {
-  //  ball.collide(rightHandPositonX*400,rightHandPositonY*400);
-  //ball.collide(hands);
-    //ball.collideBalls();
-    ball.collideHand(rightHandPositonX*400,rightHandPositonY*400);
-    ball.collideHand(leftHandPositonX*400,leftHandPositonY*400);
-    ball.move();
-    ball.display();
-    });
-  } else {
-    // uupdate user credit record.
-    if (creditFlag=1) {
-    updataCredit(userId,credit);
-
-    creditFlag = 0;
   }
-
-    gameFlag = 0;
-    setUpBalls();
-
-  }
-  }
-//   balls.forEach(ball => {
-// //  ball.collide(rightHandPositonX*400,rightHandPositonY*400);
-// //ball.collide(hands);
-//   //ball.collideBalls();
-//   ball.collideHand(rightHandPositonX*400,rightHandPositonY*400);
-//   ball.move();
-//   ball.display();
-//   });
+  balls.forEach(ball => {
+//  ball.collide(rightHandPositonX*400,rightHandPositonY*400);
+//ball.collide(hands);
+  //ball.collideBalls();
+  ball.collideHand();
+  ball.move();
+  ball.display();
+  });
   requestAnimationFrame(run);
 }
 
@@ -157,14 +125,10 @@ function updataCredit(userId, credit)
 
 </head>
 <body>
-  <canvas id="myCanvas" width = 500 height=500></canvas>
-  <p id="creditlabel"></p><script>document.getElementById("creditlabel").innerHTML = credit;</script>
-  <div><a href="http://localhost:4200/toplist">Top List</a><div>
+  <canvas id="myCanvas" width = 900 height=500></canvas>
   <!--div id="startup">
 
 
-
   </div-->
-
 </body>
 </html>

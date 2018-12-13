@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SIGNUP OR SIGNIN </title>
+<!-- get JQUERY -->
+  <script src = "js/jquery/jquery-3.3.1.min.js"></script>
+    <!-- for sockets -->
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- get our custom script -->
+  <script src = "js/client.js"></script>
+<!--set some style properties::: -->
+<link rel="stylesheet" type="text/css" href="css/project.css">
+</head>
+<body>
+  <!-- NEW for the result -->
+<div id = "result"></div>
+
+<div class= "formContainer">
+<!--form done using more current tags... -->
+<form id="insertGallery" action="">
+<!-- group the related elements in a form -->
+<h3> SignUp/SignIn</h3>
+<fieldset>
+<p><label>UserId:</label><input type="text" size="24" maxlength = "40" name = "userId" required></p>
+<p><label>Password:</label><input type = "password" size="24" maxlength = "40"  name = "password" required></p>
+<p><label>userBestCredit:</label><input type = "hidden" size="24" maxlength = "40" value = "0" name = "userBestCredit" required></p>
+
+<p class = "sub"><input type = "submit" name = "submit" value = "submit my info" id ="buttonS" /></p>
+<a href="http://localhost:4200?userId=&userId">GO PLAY GAME</a>
+</fieldset>
+</form>
+</div>
+</body>
+</html>

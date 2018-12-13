@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sample Insert into Gallery Form USING JQUERY AND SOCKETS </title>
+<!-- get JQUERY -->
+  <script src = "js/jquery/jquery-3.3.1.min.js"></script>
+    <!-- for sockets -->
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- get our custom script -->
+  <script src = "js/client.js"></script>
+<!--set some style properties::: -->
+<link rel="stylesheet" type="text/css" href="css/project.css">
+</head>
+<body>
+  <!-- NEW for the result -->
+<div id = "result"></div>
+
+<div class= "formContainer">
+<!--form done using more current tags... -->
+<form id="insertGallery" action="">
+<!-- group the related elements in a form -->
+<h3> SUBMIT AN ART WORK :::</h3>
+<fieldset>
+<p><label>Artist:</label><input type="text" size="24" maxlength = "40" name = "artist" required></p>
+<p><label>Title:</label><input type = "text" size="24" maxlength = "40"  name = "title" required></p>
+<p><label>Geographic Location:</label><input type = "text" size="24" maxlength = "40" name = "geoLoc" required></p>
+<p><label>Creation Date (DD-MM-YYYY):</label><input type="date" name="creationDate" required></p>
+<p><label>Description:</label><textarea type = "text" rows="4" cols="50" name = "descript" required></textarea></p>
+<p class = "sub"><input type = "submit" name = "submit" value = "submit my info" id ="buttonS" /></p>
+ </fieldset>
+</form>
+</div>
+</body>
+</html>
